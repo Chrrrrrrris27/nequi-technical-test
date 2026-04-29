@@ -1,0 +1,7 @@
+{
+  "name": "nequiTechnicalTest",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
