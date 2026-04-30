@@ -2,7 +2,6 @@ import { computed, inject, Inject, Injectable, signal } from "@angular/core";
 import { Todo } from "../../domain/models/todo.model";
 import { TODOS_REPOSITORY, TodosRepository } from "../../domain/domain";
 import { LoaderService } from "src/app/shared";
-import { sleep } from "src/app/shared/utils/sleep";
 
 @Injectable()
 export class TodosService {
@@ -18,7 +17,6 @@ export class TodosService {
 
   async getTodos(limit: number = 20, offset: number = 0) {
     this.loader.show();
-    await sleep(4);
     this.todos.set(await this.repository.getTodos(limit, offset));
     this.loader.hide();
   }
