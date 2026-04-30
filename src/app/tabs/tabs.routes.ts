@@ -1,10 +1,9 @@
 import { Routes } from '@angular/router';
-import { TabsPage } from './tabs.page';
 
 export const routes: Routes = [
   {
-    path: '',
-    component: TabsPage,
+    path: 'tabs',
+    loadComponent: () => import('./tabs.page').then((m) => m.TabsPage),
     children: [
       {
         path: 'todos',
@@ -17,5 +16,10 @@ export const routes: Routes = [
           import('../features/index').then((m) => m.categoriesRoutes),
       },
     ],
+  },
+  {
+    path: '',
+    redirectTo: 'tabs/todos',
+    pathMatch: 'full',
   },
 ];

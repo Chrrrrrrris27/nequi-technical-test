@@ -1,0 +1,14 @@
+@if(todos.length > 0) {
+  <ion-list lines="none" inset="true">
+    @for(todo of todos; track $index) {
+      <todo-item
+        [todo]="todo"
+        (toggleTodoEmitter)="onToggleTodo($event)"
+        (deleteTodoEmitter)="onDeleteTodo($event)"
+      >
+      </todo-item>
+    }
+  </ion-list>
+} @else {
+  <ion-note>No tienes tareas</ion-note>
+}
