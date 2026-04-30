@@ -1,0 +1,12 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="dark" defaultHref="/tabs/todos"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>{{defaultTodo() ? 'Editar tarea' : 'Crear tarea'}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <todo-form [defaultTodo]="defaultTodo()" [categories]="categories()"></todo-form>
+</ion-content>

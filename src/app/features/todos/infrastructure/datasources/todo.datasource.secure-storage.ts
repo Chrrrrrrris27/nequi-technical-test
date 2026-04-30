@@ -3,7 +3,7 @@ import { Todo, TodosDatasource } from '../../domain/domain';
 import { LocalStorageService } from 'src/app/core';
 import { STORAGE_KEYS } from 'src/app/core/constants/storage-keys';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class TodosDatasourceSecureStorage implements TodosDatasource {
 
   constructor(private localStorageService: LocalStorageService) {}

@@ -1,0 +1,30 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <ion-list inset="true">
+
+    <ion-item>
+      <ion-label position="stacked">Nombre</ion-label>
+      <ion-input
+        formControlName="name"
+        placeholder="Ej. Trabajo"
+      ></ion-input>
+    </ion-item>
+
+    @if(form.controls.name.touched && form.controls.name.invalid) {
+      <ion-text color="danger" class="ion-padding-start">
+        El nombre es requerido (mínimo 3 caracteres)
+      </ion-text>
+    }
+
+  </ion-list>
+
+  <ion-button
+    expand="block"
+    type="submit"
+    class="ion-margin-top"
+    [disabled]="form.invalid"
+  >
+    {{ defaultCategory() ? 'Actualizar' : 'Crear' }}
+  </ion-button>
+
+</form>

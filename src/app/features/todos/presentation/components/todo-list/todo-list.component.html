@@ -1,9 +1,10 @@
 @if(todos.length > 0) {
   <ion-list lines="none" inset="true">
-    @for(todo of todos; track $index) {
+    @for(todo of todos; track todo.id) {
       <todo-item
         [todo]="todo"
         (toggleTodoEmitter)="onToggleTodo($event)"
+        (editTodoEmitter)="onEditedTodo($event)"
         (deleteTodoEmitter)="onDeleteTodo($event)"
       >
       </todo-item>

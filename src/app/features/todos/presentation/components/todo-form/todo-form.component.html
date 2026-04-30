@@ -1,0 +1,45 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <ion-list inset="true">
+
+    <ion-item>
+      <ion-label position="stacked">Tarea</ion-label>
+      <ion-input
+        formControlName="title"
+        placeholder="Ej. Comprar cena"
+      ></ion-input>
+    </ion-item>
+
+    @if(form.controls.title.touched && form.controls.title.invalid) {
+      <ion-text color="danger" class="ion-padding-start">
+        El título es requerido (mínimo 3 caracteres)
+      </ion-text>
+    }
+
+    <ion-item>
+      <ion-label position="stacked">Categoría</ion-label>
+      <ion-select
+        formControlName="categoryId"
+        interface="popover"
+        placeholder="Selecciona una categoría"
+      >
+        @for (category of categories; track category.id) {
+          <ion-select-option [value]="category.id">
+            {{ category.name }}
+          </ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-button
+    expand="block"
+    type="submit"
+    class="ion-margin-top"
+    [disabled]="form.invalid"
+  >
+    {{ defaultTodo() ? 'Actualizar' : 'Crear' }}
+  </ion-button>
+
+</form>

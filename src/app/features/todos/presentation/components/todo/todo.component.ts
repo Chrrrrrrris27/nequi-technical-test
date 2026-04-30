@@ -1,15 +1,16 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Todo } from "../../../domain/domain";
-import { IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonIcon } from "@ionic/angular/standalone";
-import { pencil, trash, checkbox, squareOutline } from 'ionicons/icons';
+import { IonLabel, IonIcon } from "@ionic/angular/standalone";
+import { checkbox, squareOutline } from 'ionicons/icons';
 import { addIcons } from "ionicons";
+import { SlidingButtonComponent } from "src/app/shared";
 
 @Component({
   selector: 'todo-item',
   templateUrl: './todo.component.html',
   styleUrl: './todo.styles.scss',
   standalone: true,
-  imports: [IonIcon, IonItemOption, IonItemOptions, IonLabel, IonItem, IonItemSliding],
+  imports: [IonIcon, IonLabel, SlidingButtonComponent],
 })
 export class TodoComponent {
   
@@ -26,7 +27,7 @@ export class TodoComponent {
   deleteTodoEmitter = new EventEmitter<string>();
 
   constructor() {
-    addIcons({trash, pencil, checkbox, squareOutline});
+    addIcons({checkbox, squareOutline});
   }
 
   onToggleTodoEmitter() {
@@ -37,8 +38,7 @@ export class TodoComponent {
     this.editTodoEmitter.emit(this.todo);
   }
   
-  onDeleteTodoEmitter(sliding: IonItemSliding) {
-    sliding.close();
+  onDeleteTodoEmitter() {
     this.deleteTodoEmitter.emit(this.todo.id);
   }
 }

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { Todo, TODOS_DATASOURCE, TodosDatasource, TodosRepository } from '../../domain/domain';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class TodosRepositoryImpl implements TodosRepository {
 
   constructor(

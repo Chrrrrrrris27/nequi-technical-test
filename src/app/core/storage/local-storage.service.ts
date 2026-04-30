@@ -22,13 +22,13 @@ export class LocalStorageService {
       try {
         const newCategories: Category[] = CATEGORIES_SEED.map(category => ({
           id: crypto.randomUUID(),
-          title: category
+          name: category
         }));
         await this.set(STORAGE_KEYS.CATEGORIES, newCategories);
         const newTodos: Todo[] = TODOS_SEED.map(todo => ({
           ...todo,
           id: crypto.randomUUID(),
-          categoryId: newCategories.find(category => category.title === todo.category)?.id
+          categoryId: newCategories.find(category => category.name === todo.category)?.id
         }))
         await this.set(STORAGE_KEYS.TODOS, newTodos);
         await this.set(STORAGE_KEYS.DEFAULT_DATA_LOADED_KEY, true);

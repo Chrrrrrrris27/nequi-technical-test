@@ -1,0 +1,14 @@
+@if(categories.length > 0) {
+  <ion-list lines="none" inset="true">
+    @for(category of categories; track category.id) {
+      <category-item
+        [category]="category"
+        (editCategoryEmitter)="onEditedCategory($event)"
+        (deleteCategoryEmitter)="onDeleteCategory($event)"
+      >
+      </category-item>
+    }
+  </ion-list>
+} @else {
+  <ion-note>No hay categorías</ion-note>
+}
