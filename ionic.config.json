@@ -1,7 +1,9 @@
 {
   "name": "nequiTechnicalTest",
   "integrations": {
-    "capacitor": {},
+    "capacitor": {
+      "enabled": false
+    },
     "cordova": {}
   },
   "type": "angular-standalone"
