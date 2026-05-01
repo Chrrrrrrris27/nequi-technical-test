@@ -3,3 +3,4 @@ export { SlidingButtonComponent } from "./sliding-button/sliding-button.componen
 export { GlobalLoaderComponent } from "./global-loader/global-loader.component";
 export { ChipFilterComponent } from "./chip-filter/chip-filter.component";
 export { SelectFilterComponent } from "./select-filter/select-filter.component";
+export { ToastComponent } from "./toast/toast.component";

@@ -1,0 +1,10 @@
+@if(currentToast(); as toast) {
+  <ion-toast
+    [isOpen]="showToast()"
+    [message]="toast.message"
+    [color]="toast.color"
+    [duration]="toast.duration"
+    [icon]="toast.icon"
+  >
+  </ion-toast>
+}

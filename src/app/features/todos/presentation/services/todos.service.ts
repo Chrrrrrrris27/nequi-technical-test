@@ -1,7 +1,7 @@
 import { computed, inject, Inject, Injectable, signal } from "@angular/core";
 import { Todo } from "../../domain/models/todo.model";
 import { TODOS_REPOSITORY, TodosRepository } from "../../domain/domain";
-import { LoaderService } from "src/app/shared";
+import { LoaderService, ToastService } from "src/app/shared";
 
 @Injectable()
 export class TodosService {
@@ -11,6 +11,7 @@ export class TodosService {
   filteredCategories: string[] = [];
   availableLoadTodos = signal<boolean>(true);
   loader = inject(LoaderService);
+  toastService = inject(ToastService);
   todos = signal<Todo[]>([]);
   total = signal<number>(0);
 
@@ -56,7 +57,17 @@ export class TodosService {
         categoryId,
       );
       this.todos.set([newTodo, ...this.todos()]);
+      this.toastService.addToast({
+        message: 'Tarea creada!',
+        color: 'success',
+        icon: 'checkmark',
+      });
     } catch (error) {
+      this.toastService.addToast({
+        message: 'Ups! Algo salió mal.',
+        color: 'danger',
+        icon: 'close',
+      });
     } finally {
       this.loader.hide();
     }
@@ -75,6 +86,11 @@ export class TodosService {
       await this.repository.toggleTodo(id);
     } catch (error) {
       this.todos.set(previousTodos);
+      this.toastService.addToast({
+        message: 'Ups! Algo salió mal.',
+        color: 'danger',
+        icon: 'close',
+      });
     }
   }
 
@@ -88,10 +104,20 @@ export class TodosService {
 
     this.todos.set(updatedTodos);
 
+    this.toastService.addToast({
+      message: 'Tarea actualizada!',
+      color: 'success',
+      icon: 'checkmark',
+    });
     try {
       await this.repository.updateTodo(updatedTodo);
     } catch (error) {
       this.todos.set(previousTodos);
+      this.toastService.addToast({
+        message: 'Ups! Algo salió mal.',
+        color: 'danger',
+        icon: 'close',
+      });
     } finally {
       this.loader.hide();
     }
@@ -107,8 +133,18 @@ export class TodosService {
 
     try {
       await this.repository.deleteTodo(id);
+      this.toastService.addToast({
+        message: 'Tarea eliminada!',
+        color: 'danger',
+        icon: 'alert',
+      });
     } catch (error) {
       this.todos.set(previousTodos);
+      this.toastService.addToast({
+        message: 'Ups! Algo salió mal.',
+        color: 'danger',
+        icon: 'close',
+      });
     } finally {
       this.loader.hide();
     }

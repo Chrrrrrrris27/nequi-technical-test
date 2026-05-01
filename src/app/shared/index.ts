@@ -1,4 +1,4 @@
-export { FilterItem } from './models/filter-item.model';
+export * from './models/models';
 
 export * from './components/components';
 

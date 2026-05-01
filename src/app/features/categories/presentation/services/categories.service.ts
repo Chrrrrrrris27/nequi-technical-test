@@ -1,10 +1,11 @@
 import { computed, inject, Inject, Injectable, signal } from "@angular/core";
 import { CATEGORIES_REPOSITORY, CategoriesRepository, Category } from "../../domain/domain";
-import { LoaderService } from "src/app/shared";
+import { LoaderService, ToastService } from "src/app/shared";
 
 @Injectable()
 export class CategoriesService {
-  loader = inject(LoaderService);
+  private loader = inject(LoaderService);
+  private toastService = inject(ToastService);
   categories = signal<Category[]>([]);
 
   constructor(@Inject(CATEGORIES_REPOSITORY) private repository: CategoriesRepository) {
@@ -29,8 +30,17 @@ export class CategoriesService {
       this.loader.show();
       const newCategory = await this.repository.createCategory(name);
       this.categories.set([newCategory, ...this.categories()]);
+      this.toastService.addToast({
+        message: 'Categoría creada!',
+        color: 'success',
+        icon: 'checkmark',
+      });
     } catch (error) {
-      
+      this.toastService.addToast({
+        message: 'Ups! Algo salió mal.',
+        color: 'danger',
+        icon: 'close',
+      });
     } finally {
       this.loader.hide();
     }
@@ -46,10 +56,20 @@ export class CategoriesService {
     
     this.categories.set(updatedCategories);
     
+    this.toastService.addToast({
+      message: 'Categoría actualizada!',
+      color: 'success',
+      icon: 'checkmark',
+    });
     try {
       await this.repository.updateCategory(updatedCategory);
     } catch (error) {
       this.categories.set(previousCategories);
+      this.toastService.addToast({
+        message: 'Ups! Algo salió mal.',
+        color: 'danger',
+        icon: 'close',
+      });
     } finally {
       this.loader.hide();
     }
@@ -65,8 +85,18 @@ export class CategoriesService {
 
     try {
       await this.repository.deleteCategory(id);
+      this.toastService.addToast({
+        message: 'Categoría eliminada!',
+        color: 'danger',
+        icon: 'alert',
+      });
     } catch (error) {
       this.categories.set(previousCategories);
+      this.toastService.addToast({
+        message: 'Ups! Algo salió mal.',
+        color: 'danger',
+        icon: 'close',
+      });
     } finally {
       this.loader.hide();
     }

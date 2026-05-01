@@ -3,6 +3,7 @@
   interface="popover"
   toggleIcon="filter"
   [label]="label"
+  [value]="selectedItem"
   (ionChange)="onSelectItem($event)">
   @for(item of items; track item.id) {
     <ion-select-option [value]="item.id">{{item.title}}</ion-select-option>
