@@ -16,13 +16,20 @@ export class TodosDatasourceSecureStorage implements TodosDatasource {
     }
   }
   
-  async getTodos(limit?: number, offset?: number): Promise<{
+  async getTodos(limit?: number, offset?: number, categories?: string[]): Promise<{
     todos: Todo[];
     total: number;
   }> {
     try {
       const todos = await this.getAll();
       const end = (offset ?? 0) + (limit ?? todos.length);
+      if (categories && categories.length > 0) {
+        const filterTodos = todos.filter(todo => todo.categoryId && categories.includes(todo.categoryId));
+        return {
+          todos: filterTodos.slice(offset, end),
+          total: filterTodos.length,
+        };
+      }
       return {
         todos: todos.slice(offset, end),
         total: todos.length,

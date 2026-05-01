@@ -1,0 +1,13 @@
+.chips-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 8px;
+  padding: 8px;
+  scroll-snap-type: x mandatory;
+}
+
+ion-chip {
+  --background: var(--ion-color-primary-shade);
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}

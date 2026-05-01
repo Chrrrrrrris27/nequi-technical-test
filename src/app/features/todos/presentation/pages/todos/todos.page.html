@@ -1,4 +1,18 @@
 <ion-content class="ion-padding todos-page_container">
+  <!-- <chip-filter
+    [chips]="categoriesChips()"
+    [defaultValue]="defaultCategory"
+    (selectedChipsEmiter)="onCategoriesFiltered($event)"
+  >
+  </chip-filter> -->
+  <select-filter
+    [items]="categoriesChips()"
+    [defaultValue]="defaultCategory"
+    (selectedItemEmiter)="onCategoriesFiltered($event)"
+    label="Categoría"
+  >
+
+  </select-filter>
   @if(!isLoading()) {
     <todo-list [todos]="todos()" [categories]="categories()"></todo-list>
     <ion-infinite-scroll (ionInfinite)="onInfiniteScroll($event)" [disabled]="!isAvailableLoadTodos">

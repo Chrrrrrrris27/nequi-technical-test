@@ -4,7 +4,7 @@ import { Todo } from "../models/todo.model";
 export const TODOS_REPOSITORY = new InjectionToken<TodosRepository>('TodosRepository');
 
 export abstract class TodosRepository {
-  abstract getTodos(limit?: number, offset?: number): Promise<{
+  abstract getTodos(limit?: number, offset?: number, categories?: string[]): Promise<{
     todos: Todo[];
     total: number;
   }>;

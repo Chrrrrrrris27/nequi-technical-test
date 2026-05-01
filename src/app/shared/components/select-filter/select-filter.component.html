@@ -1,0 +1,10 @@
+<ion-select
+  label-placement="floating"
+  interface="popover"
+  toggleIcon="filter"
+  [label]="label"
+  (ionChange)="onSelectItem($event)">
+  @for(item of items; track item.id) {
+    <ion-select-option [value]="item.id">{{item.title}}</ion-select-option>
+  }
+</ion-select>

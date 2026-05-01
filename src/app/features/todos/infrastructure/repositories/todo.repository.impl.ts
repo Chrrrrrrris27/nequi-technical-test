@@ -8,11 +8,11 @@ export class TodosRepositoryImpl implements TodosRepository {
     @Inject(TODOS_DATASOURCE) private datasource: TodosDatasource
   ) {}
   
-  getTodos(limit?: number, offset?: number): Promise<{
+  getTodos(limit?: number, offset?: number, categories?: string[]): Promise<{
     todos: Todo[];
     total: number;
   }> {
-    return this.datasource.getTodos(limit, offset);
+    return this.datasource.getTodos(limit, offset, categories);
   }
   getById(id: string): Promise<Todo | undefined> {
     return this.datasource.getById(id);

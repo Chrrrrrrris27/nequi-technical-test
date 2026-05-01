@@ -1,10 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { TodosList } from "../../components/todo-list/todo-list.component";
 import { TodosService } from '../../services/todos.service';
 import { addIcons } from 'ionicons';
 import { add, close } from 'ionicons/icons';
 import { IonicModule } from '@ionic/angular';
-import { LoaderService } from 'src/app/shared';
+import { LoaderService, ChipFilterComponent, SelectFilterComponent } from 'src/app/shared';
 import { TodoFormComponent } from "../../components/todo-form/todo-form.component";
 import { CategoriesService } from 'src/app/features/categories/presentation/services/categories.service';
 import {
@@ -16,7 +16,7 @@ import {
   templateUrl: './todos.page.html',
   styleUrl: './todos.page.scss',
   standalone: true,
-  imports: [TodosList, IonicModule, TodoFormComponent],
+  imports: [TodosList, IonicModule, TodoFormComponent, ChipFilterComponent, SelectFilterComponent],
 })
 export class TodosPage {
   private todosService = inject(TodosService);
@@ -27,6 +27,8 @@ export class TodosPage {
   total = this.todosService.total;
   isAvailableLoadTodos = this.todosService.availableLoadTodos;
   categories = this.categoriesService.categories;
+  categoriesChips = computed(() =>  [{id: 'all', title: 'Todas'}, ...this.categories().map(category => ({id: category.id, title: category.name}))]);
+  defaultCategory = 'all';
   isLoading = this.loaderService.loading;
 
   constructor() {
@@ -41,6 +43,11 @@ export class TodosPage {
     this.todosService
       .createTodo(data.title, data.categoryId)
       .then((_) => this.setModalOpen(false));
+  }
+
+  onCategoriesFiltered(category: string) {
+    const listCategories = category === this.defaultCategory ? [] : [category];
+    this.todosService.applyFilter(listCategories);
   }
 
   async onInfiniteScroll(event: InfiniteScrollCustomEvent) {

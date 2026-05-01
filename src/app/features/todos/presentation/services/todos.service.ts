@@ -5,10 +5,10 @@ import { LoaderService } from "src/app/shared";
 
 @Injectable()
 export class TodosService {
-
   private isFirstTodosLoaded = true;
   private todosLimit = 10;
   private todosOffset = 0;
+  filteredCategories: string[] = [];
   availableLoadTodos = signal<boolean>(true);
   loader = inject(LoaderService);
   todos = signal<Todo[]>([]);
@@ -25,6 +25,7 @@ export class TodosService {
       const { todos, total } = await this.repository.getTodos(
         this.todosLimit,
         this.todosOffset,
+        this.filteredCategories,
       );
       this.todos.set([...this.todos(), ...todos]);
       this.total.set(total);
@@ -33,6 +34,12 @@ export class TodosService {
       return;
     }
     this.availableLoadTodos.set(false);
+  }
+
+  async applyFilter(categories: string[]) {
+    this.filteredCategories = categories;
+    this._resetTodos();
+    await this.loadTodos();
   }
 
   getTodoByID(id: string) {
@@ -105,5 +112,14 @@ export class TodosService {
     } finally {
       this.loader.hide();
     }
+  }
+
+  private _resetTodos() {
+    this.todos.set([]);
+    this.todosLimit = 10;
+    this.todosOffset = 0;
+    this.total.set(0);
+    this.isFirstTodosLoaded = true;
+    this.availableLoadTodos.set(true);
   }
 }

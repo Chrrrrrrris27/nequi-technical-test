@@ -26,8 +26,9 @@ export class LocalStorageService {
         }));
         await this.set(STORAGE_KEYS.CATEGORIES, newCategories);
         const newTodos: Todo[] = TODOS_SEED.map(todo => ({
-          ...todo,
           id: crypto.randomUUID(),
+          title: todo.title,
+          completed: todo.completed,
           categoryId: newCategories.find(category => category.name === todo.category)?.id
         }))
         await this.set(STORAGE_KEYS.TODOS, newTodos);

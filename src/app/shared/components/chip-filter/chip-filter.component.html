@@ -1,0 +1,8 @@
+<div class="chips-container">
+  @for(chip of chips; track chip.id) {
+    <ion-chip (click)="onToggleChip(chip)" [outline]="selectedChip !== chip.id">
+      {{chip.title}}
+    </ion-chip>
+  }
+</div>
+  

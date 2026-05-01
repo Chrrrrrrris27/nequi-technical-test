@@ -4,7 +4,7 @@ import { Todo } from "../models/todo.model";
 export const TODOS_DATASOURCE = new InjectionToken<TodosDatasource>('TodosDatasource');
 
 export abstract class TodosDatasource {
-  abstract getTodos(limit?: number, offset?: number): Promise<{
+  abstract getTodos(limit?: number, offset?: number, categories?: string[]): Promise<{
     todos: Todo[];
     total: number;
   }>;
