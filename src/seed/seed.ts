@@ -35,9 +35,9 @@ export const TODOS_SEED: {
   { title: 'Pedir comida online', completed: false, category: 'Compras' },
   { title: 'Revisar ofertas', completed: false, category: 'Compras' },
 
-  { title: 'Estudiar Angular', completed: false, category: 'Estudio' },
+  { title: 'Estudiar Java', completed: false, category: 'Estudio' },
   { title: 'Leer documentación', completed: true, category: 'Estudio' },
-  { title: 'Practicar TypeScript', completed: false, category: 'Estudio' },
+  { title: 'Practicar Flutter', completed: false, category: 'Estudio' },
   { title: 'Ver curso online', completed: true, category: 'Estudio' },
   { title: 'Hacer ejercicios prácticos', completed: false, category: 'Estudio' },
 

@@ -1,11 +1,31 @@
 <ion-content class="ion-padding todos-page_container">
   @if(!isLoading()) {
-    <todo-list [todos]="todos()"></todo-list>
+    <todo-list [todos]="todos()" [categories]="categories()"></todo-list>
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+      <ion-fab-button (click)="setModalOpen(true)">
+        <ion-icon name="add">
+        </ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   }
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="onCreateTodo()">
-      <ion-icon name="add">
-      </ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Crear tarea</ion-title>
+          <ion-buttons slot="end">
+            <ion-button color="dark" (click)="setModalOpen(false)">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <todo-form
+          [categories]="categories()"
+          (submitEmitter)="onCreateTodo($event)"
+        ></todo-form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

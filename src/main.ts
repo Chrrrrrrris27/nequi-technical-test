@@ -6,8 +6,6 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
-import { TODOS_PROVIDERS } from './app/features/todos/todos.provider';
-import { CATEGORIES_PROVIDERS } from './app/features/categories/categories.provider';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -19,7 +17,5 @@ bootstrapApplication(AppComponent, {
         name: '__todosdb',
       }),
     ),
-    ...TODOS_PROVIDERS,
-    ...CATEGORIES_PROVIDERS,
   ],
 });

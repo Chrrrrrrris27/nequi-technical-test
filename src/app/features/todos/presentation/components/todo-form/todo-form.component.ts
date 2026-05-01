@@ -1,8 +1,7 @@
-import { Component, Input, effect, inject, input } from '@angular/core';
+import { Component, EventEmitter, Input, Output, effect, inject, input } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule, NavController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { Category, Todo } from 'src/app/features';
-import { TodosService } from '../../services/todos.service';
 
 @Component({
   selector: 'todo-form',
@@ -13,20 +12,23 @@ import { TodosService } from '../../services/todos.service';
 export class TodoFormComponent {
 
   private fb = inject(FormBuilder);
-  private todosService = inject(TodosService);
 
   defaultTodo = input<Todo | undefined>();
 
   @Input() categories: Category[] = [];
+
+  @Output()
+  submitEmitter = new EventEmitter<{
+    title: string;
+    categoryId?: string;
+  }>();
 
   form = this.fb.nonNullable.group({
     title: ['', [Validators.required, Validators.minLength(3)]],
     categoryId: [''],
   });
 
-  constructor(
-    private nav: NavController
-  ) {
+  constructor() {
     effect(() => {
       const todo = this.defaultTodo();
       if (!todo) {
@@ -49,22 +51,8 @@ export class TodoFormComponent {
     }
 
     const value = this.form.getRawValue();
-    const todo = this.defaultTodo();
-    if (!!todo) {
-      const updatedTodo = {
-        ...todo,
-        ...value,
-      }
-      this.todosService.updateTodo(updatedTodo)
-        .then((_) => {
-          this.nav.navigateForward('/tabs/todos');
-        });
-      return;
-    }
-      
-    this.todosService.createTodo(value.title, value.categoryId)
-      .then((_) => {
-        this.nav.navigateForward('/tabs/todos');
-      });
+    this.submitEmitter.emit({
+      ...value
+    });
   }
 }

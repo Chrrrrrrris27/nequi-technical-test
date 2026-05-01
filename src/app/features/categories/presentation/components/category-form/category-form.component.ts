@@ -1,8 +1,7 @@
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, effect, EventEmitter, inject, input, Output } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Category } from 'src/app/features';
 import { IonicModule, NavController } from '@ionic/angular';
-import { CategoriesService } from '../../services/categories.service';
 
 @Component({
   selector: 'category-form',
@@ -14,9 +13,10 @@ export class TodoFormComponent {
 
   private fb = inject(FormBuilder);
 
-  private categoriesService = inject(CategoriesService);
-
   defaultCategory = input<Category | undefined>();
+
+  @Output()
+  submitEmitter = new EventEmitter<string>();
 
   form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
@@ -44,27 +44,7 @@ export class TodoFormComponent {
       this.form.markAllAsTouched();
       return;
     }
-
     const value = this.form.getRawValue();
-
-    const category = this.defaultCategory();
-
-    if (!!category) {
-      const updatedCategory: Category = {
-        ...category,
-        name: value.name,
-      };
-      this.categoriesService.updateCategory(updatedCategory)
-        .then((_) => {
-          this.nav.navigateForward('/tabs/categories');
-        })
-      return;
-    }
-      
-    this.categoriesService.createCategory(value.name)
-      .then((_) => {
-        this.nav.navigateForward('/tabs/categories');
-      });
-    
+    this.submitEmitter.emit(value.name);
   }
 }

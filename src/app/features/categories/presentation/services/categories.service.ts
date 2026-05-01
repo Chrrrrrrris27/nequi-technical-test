@@ -51,7 +51,7 @@ export class CategoriesService {
     } catch (error) {
       this.categories.set(previousCategories);
     } finally {
-      this.loader.show();
+      this.loader.hide();
     }
   }
 

@@ -1,30 +1,42 @@
 import { Component, inject } from '@angular/core';
 import { TodosList } from "../../components/todo-list/todo-list.component";
 import { TodosService } from '../../services/todos.service';
-import { IonContent, IonFab, IonFabButton, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { add } from 'ionicons/icons';
-import { NavController } from '@ionic/angular';
+import { add, close } from 'ionicons/icons';
+import { NavController, IonicModule } from '@ionic/angular';
 import { LoaderService } from 'src/app/shared';
+import { TodoFormComponent } from "../../components/todo-form/todo-form.component";
+import { CategoriesService } from 'src/app/features/categories/presentation/services/categories.service';
 
 @Component({
   selector: 'todos-page',
   templateUrl: './todos.page.html',
   styleUrl: './todos.page.scss',
   standalone: true,
-  imports: [TodosList, IonContent, IonFab, IonFabButton, IonIcon],
+  imports: [TodosList, IonicModule, TodoFormComponent],
 })
 export class TodosPage {
   private todosService = inject(TodosService);
+  private categoriesService = inject(CategoriesService);
   private loaderService = inject(LoaderService);
+  isModalOpen = false;
   todos = this.todosService.todos;
+  categories = this.categoriesService.categories;
   isLoading = this.loaderService.loading;
 
-  constructor(private nav: NavController) {
-    addIcons({ add });
+  constructor() {
+    addIcons({ add, close });
   }
 
-  onCreateTodo() {
-    this.nav.navigateForward('/todo');
+  setModalOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
+
+  onCreateTodo(data: {
+    title: string;
+    categoryId?: string;
+  }) {
+    this.todosService.createTodo(data.title, data.categoryId)
+      .then((_) => this.setModalOpen(false));
   }
 }

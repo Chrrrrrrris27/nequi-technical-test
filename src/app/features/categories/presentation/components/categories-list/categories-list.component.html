@@ -9,6 +9,26 @@
       </category-item>
     }
   </ion-list>
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Editar categoría</ion-title>
+          <ion-buttons slot="end">
+            <ion-button color="dark" (click)="setModalOpen(false)">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <category-form
+          [defaultCategory]="selectedCategory"
+          (submitEmitter)="onUpdateCategory($event)"
+        ></category-form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 } @else {
   <ion-note>No hay categorías</ion-note>
 }

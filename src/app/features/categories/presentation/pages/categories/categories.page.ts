@@ -1,31 +1,37 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { IonContent, IonFab, IonIcon, IonFabButton } from "@ionic/angular/standalone";
+import { Component, inject } from '@angular/core';
+import { IonContent, IonFab, IonIcon, IonFabButton, IonModal, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton } from "@ionic/angular/standalone";
 import { CategoriesService } from '../../services/categories.service';
 import { CategoriesListComponent } from "../../components/categories-list/categories-list.component";
 import { addIcons } from 'ionicons';
-import { add } from 'ionicons/icons';
-import { NavController } from '@ionic/angular';
+import { add, close } from 'ionicons/icons';
 import { LoaderService } from 'src/app/shared';
+import { TodoFormComponent } from "../../components/category-form/category-form.component";
 
 @Component({
   selector: 'categories',
   templateUrl: './categories.page.html',
   styleUrls: ['./categories.page.scss'],
   standalone: true,
-  imports: [IonFabButton, IonIcon, IonFab, IonContent, CategoriesListComponent],
+  imports: [IonButton, IonButtons, IonTitle, IonToolbar, IonHeader, IonModal, IonFabButton, IonIcon, IonFab, IonContent, CategoriesListComponent, TodoFormComponent],
 })
 export class CategoriesPage {
 
   private categoriesService = inject(CategoriesService);
   private loaderService = inject(LoaderService);
+  isModalOpen = false;
   isLoading = this.loaderService.loading;
   categories = this.categoriesService.categories;
 
-  constructor(private nav: NavController) {
-    addIcons({ add });
+  constructor() {
+    addIcons({ add, close });
   }
 
-  onCreateCategory() {
-    this.nav.navigateForward('/category');
+  setModalOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
+
+  onCreateCategory(name: string) {
+    this.categoriesService.createCategory(name)
+      .then((_) => this.setModalOpen(false));
   }
 }

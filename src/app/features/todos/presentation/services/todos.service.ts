@@ -28,7 +28,7 @@ export class TodosService {
   );
   }
   
-  async createTodo(title: string, categoryId: string) {
+  async createTodo(title: string, categoryId?: string) {
     try {
       this.loader.show();
       const newTodo = await this.repository.createTodo(title, false, categoryId);
