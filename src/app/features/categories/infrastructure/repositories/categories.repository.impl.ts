@@ -8,8 +8,8 @@ export class CategoriesRepositoryImpl implements CategoriesRepository {
     @Inject(CATEGORIES_DATASOURCE) private datasource: CategoriesDatasource
   ) {}
 
-  getCategories(limit: number, offset: number): Promise<Category[]> {
-    return this.datasource.getCategories(limit, offset);
+  getCategories(): Promise<Category[]> {
+    return this.datasource.getCategories();
   }
   getById(id: string): Promise<Category | undefined> {
     return this.datasource.getById(id);

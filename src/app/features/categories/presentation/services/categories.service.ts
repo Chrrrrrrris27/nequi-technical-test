@@ -11,9 +11,9 @@ export class CategoriesService {
     this.getCategories();
   }
 
-  async getCategories(limit: number = 20, offset: number = 0) {
+  async getCategories() {
     this.loader.show();
-    this.categories.set(await this.repository.getCategories(limit, offset));
+    this.categories.set(await this.repository.getCategories());
     this.loader.hide();
   }
 

@@ -19,11 +19,9 @@ export class CateogriesDatasourceLocalStorage implements CategoriesDatasource {
     }
   }
 
-  async getCategories(limit: number, offset: number): Promise<Category[]> {
+  async getCategories(): Promise<Category[]> {
     try {
-      const todos = await this.getAll();
-      const end = offset + limit;
-      return todos.slice(offset, end);
+      return await this.getAll();
     } catch (error) {
       return [];
     }
