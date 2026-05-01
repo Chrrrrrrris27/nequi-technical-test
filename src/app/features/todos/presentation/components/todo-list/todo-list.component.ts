@@ -1,9 +1,20 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { Todo } from '../../../domain/domain';
 import { TodoComponent } from "../todo/todo.component";
-import { IonList, IonNote, AlertController, IonModal, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonContent, IonIcon } from "@ionic/angular/standalone";
+import {
+  IonList,
+  IonNote,
+  AlertController,
+  IonModal,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonButton,
+  IonContent,
+  IonIcon,
+} from '@ionic/angular/standalone';
 import { TodosService } from '../../services/todos.service';
-import { NavController } from '@ionic/angular';
 import { TodoFormComponent } from "../todo-form/todo-form.component";
 import { Category } from 'src/app/features/categories/domain/domain';
 import { addIcons } from 'ionicons';

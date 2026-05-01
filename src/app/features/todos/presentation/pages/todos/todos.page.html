@@ -1,6 +1,9 @@
 <ion-content class="ion-padding todos-page_container">
   @if(!isLoading()) {
     <todo-list [todos]="todos()" [categories]="categories()"></todo-list>
+    <ion-infinite-scroll (ionInfinite)="onInfiniteScroll($event)" [disabled]="!isAvailableLoadTodos">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
     <ion-fab slot="fixed" vertical="bottom" horizontal="end">
       <ion-fab-button (click)="setModalOpen(true)">
         <ion-icon name="add">

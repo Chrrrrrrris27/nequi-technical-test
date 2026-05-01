@@ -4,7 +4,10 @@ import { Todo } from "../models/todo.model";
 export const TODOS_REPOSITORY = new InjectionToken<TodosRepository>('TodosRepository');
 
 export abstract class TodosRepository {
-  abstract getTodos(limit: number, offset: number): Promise<Todo[]>;
+  abstract getTodos(limit?: number, offset?: number): Promise<{
+    todos: Todo[];
+    total: number;
+  }>;
   abstract getById(id: string): Promise<Todo | undefined>;
   abstract createTodo(title: string, completed?: boolean, categoryId?: string): Promise<Todo>;
   abstract toggleTodo(id: string): Promise<void>;

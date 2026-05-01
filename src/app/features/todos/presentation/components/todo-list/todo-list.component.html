@@ -1,36 +1,35 @@
-@if(todos.length > 0) {
-  <ion-list lines="none" inset="true">
-    @for(todo of todos; track todo.id) {
-      <todo-item
-        [todo]="todo"
-        (toggleTodoEmitter)="onToggleTodo($event)"
-        (editTodoEmitter)="onEditedTodo($event)"
-        (deleteTodoEmitter)="onDeleteTodo($event)"
-      >
-      </todo-item>
-    }
-  </ion-list>
-  <ion-modal [isOpen]="isModalOpen">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Editar tarea</ion-title>
-          <ion-buttons slot="end">
-            <ion-button color="dark" (click)="setModalOpen(false)">
-              <ion-icon name="close"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <todo-form
-          [defaultTodo]="selectedTodo"
-          [categories]="categories"
-          (submitEmitter)="onUpdateTodo($event)"
-        ></todo-form>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
-} @else {
+<ion-list lines="none" inset="true">
+  @for(todo of todos; track todo.id) {
+    <todo-item
+      [todo]="todo"
+      (toggleTodoEmitter)="onToggleTodo($event)"
+      (editTodoEmitter)="onEditedTodo($event)"
+      (deleteTodoEmitter)="onDeleteTodo($event)"
+    >
+    </todo-item>
+  }
+</ion-list>
+<ion-modal [isOpen]="isModalOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Editar tarea</ion-title>
+        <ion-buttons slot="end">
+          <ion-button color="dark" (click)="setModalOpen(false)">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <todo-form
+        [defaultTodo]="selectedTodo"
+        [categories]="categories"
+        (submitEmitter)="onUpdateTodo($event)"
+      ></todo-form>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+@if(todos.length === 0) {
   <ion-note>No tienes tareas</ion-note>
 }
