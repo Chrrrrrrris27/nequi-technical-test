@@ -15,6 +15,8 @@ export class TodosService {
   availableLoadTodos = signal<boolean>(true);
   todos = signal<Todo[]>([]);
   total = signal<number>(0);
+  completed = computed(() => this.todos().filter((todo) => todo.completed).length);
+  pendings = computed(() => this.todos().filter((todo) => !todo.completed).length);
 
   avaialbleLoadTodos = computed(() => this.todosOffset < this.total());
 

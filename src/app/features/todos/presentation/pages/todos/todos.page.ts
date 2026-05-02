@@ -3,24 +3,49 @@ import { TodosList } from "../../components/todo-list/todo-list.component";
 import { TodosService } from '../../services/todos.service';
 import { addIcons } from 'ionicons';
 import { add, close } from 'ionicons/icons';
-import { IonicModule } from '@ionic/angular';
+import {
+  InfiniteScrollCustomEvent,
+  IonContent,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
+  IonFab,
+  IonFabButton,
+  IonIcon,
+  IonModal,
+  IonToolbar,
+  IonTitle,
+  IonButton,
+  IonButtons,
+} from '@ionic/angular/standalone';
 import { LoaderService, SelectFilterComponent, ChipFilterComponent } from 'src/app/shared';
 import { TodoFormComponent } from "../../components/todo-form/todo-form.component";
 import { CategoriesService } from 'src/app/features/categories/presentation/services/categories.service';
-import { InfiniteScrollCustomEvent, IonContent } from '@ionic/angular/standalone';
+import { TodosInfoComponent } from "../../components/todos-info/todos-info.component";
+import { IonHeader } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'todos-page',
   templateUrl: './todos.page.html',
   styleUrl: './todos.page.scss',
   standalone: true,
-  imports: [
+  imports: [IonHeader, 
     TodosList,
-    IonicModule,
     TodoFormComponent,
+    IonInfiniteScroll,
+    IonInfiniteScrollContent,
+    IonContent,
+    IonFab,
+    IonFabButton,
+    IonIcon,
+    IonModal,
+    IonToolbar,
+    IonTitle,
+    IonButton,
+    IonButtons,
     SelectFilterComponent,
-    ChipFilterComponent
-],
+    ChipFilterComponent,
+    TodosInfoComponent,
+  ],
 })
 export class TodosPage implements OnInit {
   private todosService = inject(TodosService);
@@ -32,6 +57,8 @@ export class TodosPage implements OnInit {
   isModalOpen = false;
   todos = this.todosService.todos;
   total = this.todosService.total;
+  completed = this.todosService.completed;
+  pendings = this.todosService.pendings;
   isAvailableLoadTodos = this.todosService.availableLoadTodos;
   categories = this.categoriesService.categories;
   categoriesChips = computed(() => [
@@ -83,9 +110,10 @@ export class TodosPage implements OnInit {
       .then((_) => this.setModalOpen(false));
   }
 
-  onCategoriesFiltered(category: string) {
+  async onCategoriesFiltered(category: string) {
     const listCategories = category === this.defaultCategory ? [] : [category];
-    this.todosService.applyFilter(listCategories);
+    await this.todosService.applyFilter(listCategories);
+    this.ensureFilledViewport();
   }
 
   async onInfiniteScroll(event: InfiniteScrollCustomEvent) {

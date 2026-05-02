@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
       <!-- <select-filter
         [items]="categoriesChips()"
@@ -13,6 +13,12 @@
         (selectedChipsEmiter)="onCategoriesFiltered($event)"
       >
       </chip-filter>
+      @if(todos().length > 0) {
+        <todos-info
+          [completed]="completed()"
+          [pendings]="pendings()"
+        ></todos-info>
+      }
   </ion-toolbar>
 </ion-header>
 <ion-content #mainContent class="ion-padding-start ion-padding-end ion-padding-bottom todos-page_container">

@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, Output, effect, inject, input } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { IonInput,IonList , IonItem, IonText, IonLabel, IonSelectOption, IonButton } from '@ionic/angular/standalone';
+import { IonInput, IonList, IonItem, IonText, IonLabel, IonSelectOption, IonButton, IonSelect } from '@ionic/angular/standalone';
 import { Category, Todo } from 'src/app/features';
 
 @Component({
   selector: 'todo-form',
   standalone: true,
-  imports: [ReactiveFormsModule, IonInput, IonList, IonItem, IonText, IonLabel, IonSelectOption, IonButton],
+  imports: [ReactiveFormsModule, IonInput, IonList, IonItem, IonText, IonLabel, IonSelect,IonSelectOption, IonButton],
   templateUrl: './todo-form.component.html',
 })
 export class TodoFormComponent {
