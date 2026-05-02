@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1033814629554",
+    "project_id": "nequi-technical-test",
+    "storage_bucket": "nequi-technical-test.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033814629554:android:7e66ed305f6478733a3dab",
+        "android_client_info": {
+          "package_name": "com.todonequitest.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf9ZSduoJOIR2FjS5fQX8a0dDHcgwwO6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

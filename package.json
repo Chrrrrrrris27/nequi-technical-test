@@ -7,7 +7,12 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
+    "cordova:prepare": "npm run build:prod",
+    "cordova:build:android": "npm run cordova:prepare && npx cordova build android",
+    "cordova:run:android": "npm run cordova:prepare && npx cordova run android --verbose",
+    "cordova:emulate:android": "npm run cordova:prepare && npx cordova emulate android --verbose",
     "test": "ng test",
     "lint": "ng lint"
   },
@@ -17,12 +22,15 @@
     "@angular/common": "^20.0.0",
     "@angular/compiler": "^20.0.0",
     "@angular/core": "^20.0.0",
+    "@angular/fire": "^20.0.1",
     "@angular/forms": "^20.0.0",
     "@angular/platform-browser": "^20.0.0",
     "@angular/platform-browser-dynamic": "^20.0.0",
     "@angular/router": "^20.0.0",
+    "@awesome-cordova-plugins/firebase-x": "^9.1.4",
     "@ionic/angular": "^8.0.0",
     "@ionic/storage-angular": "^4.0.0",
+    "firebase": "^12.12.1",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -42,8 +50,10 @@
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
-    "cordova-android": "^15.0.0",
+    "cordova-android": "^14.0.0",
+    "cordova-ios": "^8.0.1",
     "cordova-plugin-device": "2.0.2",
+    "cordova-plugin-firebasex": "^20.0.1",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^5.0.0",
     "cordova-plugin-splashscreen": "5.0.2",
@@ -68,9 +78,11 @@
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-ionic-keyboard": {}
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-firebasex": {}
     },
     "platforms": [
+      "ios",
       "android"
     ]
   }
