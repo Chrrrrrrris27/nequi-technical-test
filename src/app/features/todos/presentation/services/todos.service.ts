@@ -60,6 +60,7 @@ export class TodosService {
         categoryId,
       );
       this.todos.set([newTodo, ...this.todos()]);
+      this.applyFilter(this.filteredCategories);
       this.toastService.addToast({
         message: 'Tarea creada!',
         color: 'success',
@@ -106,6 +107,7 @@ export class TodosService {
     );
 
     this.todos.set(updatedTodos);
+    this.applyFilter(this.filteredCategories);
 
     this.toastService.addToast({
       message: 'Tarea actualizada!',

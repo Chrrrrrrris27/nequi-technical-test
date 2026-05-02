@@ -3,16 +3,17 @@
   <ion-list inset="true">
 
     <ion-item>
-      <ion-label position="stacked">Nombre</ion-label>
+      <ion-label position="stacked">Nombre *</ion-label>
       <ion-input
         formControlName="name"
         placeholder="Ej. Trabajo"
+        autocapitalize="sentences"
       ></ion-input>
     </ion-item>
 
     @if(form.controls.name.touched && form.controls.name.invalid) {
       <ion-text color="danger" class="ion-padding-start">
-        El nombre es requerido (mínimo 3 caracteres)
+        Mínimo 3 caracteres
       </ion-text>
     }
 
