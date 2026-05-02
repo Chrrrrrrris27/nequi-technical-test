@@ -1,0 +1,7 @@
+export const REMOTE_CONFIG_KEYS = {
+  ENABLED_SELECTOR_CATEGORIES_FILTER: 'enabledSelectorCategoriesFilter',
+};
+
+export const REMOTE_CONFIG_DEFAULTS = {
+  [REMOTE_CONFIG_KEYS.ENABLED_SELECTOR_CATEGORIES_FILTER]: false,
+}

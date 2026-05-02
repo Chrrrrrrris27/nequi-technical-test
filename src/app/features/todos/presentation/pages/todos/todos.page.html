@@ -1,24 +1,27 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-      <!-- <select-filter
+    @if (enabledSelectorCategoriesFilter) {
+      <select-filter
         [items]="categoriesChips()"
         [defaultValue]="defaultCategory"
         (selectedItemEmiter)="onCategoriesFiltered($event)"
         label="Categoría"
       >
-      </select-filter> -->
+      </select-filter>
+    } @else {
       <chip-filter
         [chips]="categoriesChips()"
         [defaultValue]="defaultCategory"
         (selectedChipsEmiter)="onCategoriesFiltered($event)"
       >
       </chip-filter>
-      @if(todos().length > 0) {
-        <todos-info
-          [completed]="completed()"
-          [pendings]="pendings()"
-        ></todos-info>
-      }
+    }
+    @if(todos().length > 0) {
+      <todos-info
+        [completed]="completed()"
+        [pendings]="pendings()"
+      ></todos-info>
+    }
   </ion-toolbar>
 </ion-header>
 <ion-content #mainContent class="ion-padding-start ion-padding-end ion-padding-bottom todos-page_container">

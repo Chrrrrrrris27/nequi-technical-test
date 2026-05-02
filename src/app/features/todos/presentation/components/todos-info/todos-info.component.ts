@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { IonCol, IonGrid, IonRow, IonItem, IonIcon, IonLabel, IonText } from '@ionic/angular/standalone';
+import { IonCol, IonGrid, IonRow, IonIcon, IonLabel } from '@ionic/angular/standalone';
 import { addIcons } from "ionicons";
 import { checkbox, squareOutline } from "ionicons/icons";
 

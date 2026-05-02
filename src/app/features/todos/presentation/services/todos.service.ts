@@ -2,21 +2,29 @@ import { computed, inject, Inject, Injectable, signal } from "@angular/core";
 import { Todo } from "../../domain/models/todo.model";
 import { TODOS_REPOSITORY, TodosRepository } from "../../domain/domain";
 import { LoaderService, ToastService } from "src/app/shared";
-import { RemoteConfigService } from "src/app/core";
+import { REMOTE_CONFIG_KEYS, RemoteConfigService } from "src/app/core";
 
 @Injectable()
 export class TodosService {
   private loaderService = inject(LoaderService);
   private toastService = inject(ToastService);
+  private remoteConfigService = inject(RemoteConfigService);
   private isFirstTodosLoaded = true;
   private todosLimit = 10;
   private todosOffset = 0;
+  enabledSelectorCategoriesFilter = this.remoteConfigService.getBooleanType(
+    REMOTE_CONFIG_KEYS.ENABLED_SELECTOR_CATEGORIES_FILTER,
+  );
   filteredCategories: string[] = [];
   availableLoadTodos = signal<boolean>(true);
   todos = signal<Todo[]>([]);
   total = signal<number>(0);
-  completed = computed(() => this.todos().filter((todo) => todo.completed).length);
-  pendings = computed(() => this.todos().filter((todo) => !todo.completed).length);
+  completed = computed(
+    () => this.todos().filter((todo) => todo.completed).length,
+  );
+  pendings = computed(
+    () => this.todos().filter((todo) => !todo.completed).length,
+  );
 
   avaialbleLoadTodos = computed(() => this.todosOffset < this.total());
 

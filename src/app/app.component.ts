@@ -1,16 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
-import { LocalStorageService } from './core';
+import { LocalStorageService, RemoteConfigService } from './core';
 import { GlobalLoaderComponent, ToastComponent } from "./shared";
-import { IonicModule } from "@ionic/angular";
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   imports: [IonApp, IonRouterOutlet, GlobalLoaderComponent, ToastComponent],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  private rc = inject(RemoteConfigService);
   constructor(private appStorage: LocalStorageService) {
     this.appStorage.init();
+  }
+
+  async ngOnInit() {
+    await this.rc.init();
   }
 }

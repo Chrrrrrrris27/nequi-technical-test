@@ -28,7 +28,8 @@ import { IonHeader } from '@ionic/angular/standalone';
   templateUrl: './todos.page.html',
   styleUrl: './todos.page.scss',
   standalone: true,
-  imports: [IonHeader, 
+  imports: [
+    IonHeader,
     TodosList,
     TodoFormComponent,
     IonInfiniteScroll,
@@ -55,6 +56,7 @@ export class TodosPage implements OnInit {
   @ViewChild('mainContent') content!: IonContent;
 
   isModalOpen = false;
+  enabledSelectorCategoriesFilter = this.todosService.enabledSelectorCategoriesFilter;
   todos = this.todosService.todos;
   total = this.todosService.total;
   completed = this.todosService.completed;

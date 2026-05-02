@@ -10,7 +10,6 @@ import { TodoFormComponent } from "../../components/category-form/category-form.
 @Component({
   selector: 'categories',
   templateUrl: './categories.page.html',
-  styleUrls: ['./categories.page.scss'],
   standalone: true,
   imports: [IonButton, IonButtons, IonTitle, IonToolbar, IonHeader, IonModal, IonFabButton, IonIcon, IonFab, IonContent, CategoriesListComponent, TodoFormComponent],
 })
