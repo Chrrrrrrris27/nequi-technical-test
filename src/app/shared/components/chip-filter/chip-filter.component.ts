@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { IonChip } from '@ionic/angular/standalone';
 import { FilterItem } from "../../models/filter-item.model";
-import { IonicModule } from "@ionic/angular";
 
 @Component({
   selector: 'chip-filter',
   templateUrl: './chip-filter.component.html',
   styleUrl: './chip-filter.component.scss',
   standalone: true,
-  imports: [IonicModule],
+  imports: [IonChip],
 })
 export class ChipFilterComponent implements OnInit {
 

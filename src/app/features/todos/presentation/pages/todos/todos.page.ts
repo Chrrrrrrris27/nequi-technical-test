@@ -1,38 +1,76 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, OnInit, ViewChild } from '@angular/core';
 import { TodosList } from "../../components/todo-list/todo-list.component";
 import { TodosService } from '../../services/todos.service';
 import { addIcons } from 'ionicons';
 import { add, close } from 'ionicons/icons';
 import { IonicModule } from '@ionic/angular';
-import { LoaderService, ChipFilterComponent, SelectFilterComponent } from 'src/app/shared';
+import { LoaderService, SelectFilterComponent, ChipFilterComponent } from 'src/app/shared';
 import { TodoFormComponent } from "../../components/todo-form/todo-form.component";
 import { CategoriesService } from 'src/app/features/categories/presentation/services/categories.service';
-import {
-  InfiniteScrollCustomEvent,
-} from '@ionic/angular/standalone';
+import { InfiniteScrollCustomEvent, IonContent } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'todos-page',
   templateUrl: './todos.page.html',
   styleUrl: './todos.page.scss',
   standalone: true,
-  imports: [TodosList, IonicModule, TodoFormComponent, ChipFilterComponent, SelectFilterComponent],
+  imports: [
+    TodosList,
+    IonicModule,
+    TodoFormComponent,
+    SelectFilterComponent,
+    ChipFilterComponent
+],
 })
-export class TodosPage {
+export class TodosPage implements OnInit {
   private todosService = inject(TodosService);
   private categoriesService = inject(CategoriesService);
   private loaderService = inject(LoaderService);
+
+  @ViewChild('mainContent') content!: IonContent;
+
   isModalOpen = false;
   todos = this.todosService.todos;
   total = this.todosService.total;
   isAvailableLoadTodos = this.todosService.availableLoadTodos;
   categories = this.categoriesService.categories;
-  categoriesChips = computed(() =>  [{id: 'all', title: 'Todas'}, ...this.categories().map(category => ({id: category.id, title: category.name}))]);
+  categoriesChips = computed(() => [
+    { id: 'all', title: 'Todas' },
+    ...this.categories().map((category) => ({
+      id: category.id,
+      title: category.name,
+    })),
+  ]);
   defaultCategory = 'all';
   isLoading = this.loaderService.loading;
 
   constructor() {
     addIcons({ add, close });
+  }
+
+  ngOnInit(): void {
+    this.todosService.loadTodos();
+  }
+
+  ionViewDidEnter() {
+    setTimeout(() => {
+      this.ensureFilledViewport();
+    });
+  }
+
+  async ensureFilledViewport() {
+    if (!this.content) return;
+
+    const scrollEl = await this.content.getScrollElement();
+
+    if (!scrollEl) return;
+
+    const isScrollable = scrollEl.scrollHeight > scrollEl.clientHeight;
+
+    if (!isScrollable && this.todosService.availableLoadTodos()) {
+      await this.todosService.loadTodos();
+      this.ensureFilledViewport();
+    }
   }
 
   setModalOpen(isOpen: boolean) {

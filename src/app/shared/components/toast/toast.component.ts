@@ -1,14 +1,14 @@
 import { Component, inject } from "@angular/core";
-import { IonicModule } from "@ionic/angular";
-import { ToastService } from "../../services/toast.service";
+import { IonToast } from '@ionic/angular/standalone';
 import { addIcons } from "ionicons";
 import { alert, checkmark, close } from "ionicons/icons";
+import { ToastService } from "../../services/toast.service";
 
 @Component({
   selector: 'toast',
   templateUrl: './toast.component.html',
   standalone: true,
-  imports: [IonicModule],
+  imports: [IonToast],
 })
 export class ToastComponent {
   private toastService = inject(ToastService);

@@ -2,27 +2,27 @@ import { computed, inject, Inject, Injectable, signal } from "@angular/core";
 import { Todo } from "../../domain/models/todo.model";
 import { TODOS_REPOSITORY, TodosRepository } from "../../domain/domain";
 import { LoaderService, ToastService } from "src/app/shared";
+import { RemoteConfigService } from "src/app/core";
 
 @Injectable()
 export class TodosService {
+  private loaderService = inject(LoaderService);
+  private toastService = inject(ToastService);
   private isFirstTodosLoaded = true;
   private todosLimit = 10;
   private todosOffset = 0;
   filteredCategories: string[] = [];
   availableLoadTodos = signal<boolean>(true);
-  loader = inject(LoaderService);
-  toastService = inject(ToastService);
   todos = signal<Todo[]>([]);
   total = signal<number>(0);
 
-  constructor(@Inject(TODOS_REPOSITORY) private repository: TodosRepository) {
-    this.loadTodos();
-    this.isFirstTodosLoaded = false;
-  }
+  avaialbleLoadTodos = computed(() => this.todosOffset < this.total());
+
+  constructor(@Inject(TODOS_REPOSITORY) private repository: TodosRepository) {}
 
   async loadTodos() {
     if (this.todosOffset < this.total() || this.isFirstTodosLoaded) {
-      this.loader.show();
+      this.loaderService.show();
       const { todos, total } = await this.repository.getTodos(
         this.todosLimit,
         this.todosOffset,
@@ -31,7 +31,8 @@ export class TodosService {
       this.todos.set([...this.todos(), ...todos]);
       this.total.set(total);
       this.todosOffset = this.todosOffset + this.todosLimit;
-      this.loader.hide();
+      this.isFirstTodosLoaded = false;
+      this.loaderService.hide();
       return;
     }
     this.availableLoadTodos.set(false);
@@ -50,7 +51,7 @@ export class TodosService {
 
   async createTodo(title: string, categoryId?: string) {
     try {
-      this.loader.show();
+      this.loaderService.show();
       const newTodo = await this.repository.createTodo(
         title,
         false,
@@ -69,7 +70,7 @@ export class TodosService {
         icon: 'close',
       });
     } finally {
-      this.loader.hide();
+      this.loaderService.hide();
     }
   }
 
@@ -95,7 +96,7 @@ export class TodosService {
   }
 
   async updateTodo(updatedTodo: Todo) {
-    this.loader.show();
+    this.loaderService.show();
     const previousTodos = this.todos();
 
     const updatedTodos = previousTodos.map((todo) =>
@@ -119,12 +120,12 @@ export class TodosService {
         icon: 'close',
       });
     } finally {
-      this.loader.hide();
+      this.loaderService.hide();
     }
   }
 
   async deleteTodo(id: string) {
-    this.loader.show();
+    this.loaderService.show();
     const previousTodos = this.todos();
 
     const updatedTodos = previousTodos.filter((todo) => todo.id !== id);
@@ -146,7 +147,7 @@ export class TodosService {
         icon: 'close',
       });
     } finally {
-      this.loader.hide();
+      this.loaderService.hide();
     }
   }
 

@@ -1,19 +1,21 @@
-<ion-content class="ion-padding-start ion-padding-end ion-padding-bottom todos-page_container">
-  <div class="todos-page_filter-wrapper">
-    <!-- <chip-filter
-      [chips]="categoriesChips()"
-      [defaultValue]="defaultCategory"
-      (selectedChipsEmiter)="onCategoriesFiltered($event)"
-    >
-    </chip-filter> -->
-    <select-filter
-      [items]="categoriesChips()"
-      [defaultValue]="defaultCategory"
-      (selectedItemEmiter)="onCategoriesFiltered($event)"
-      label="Categoría"
-    >
-    </select-filter>
-  </div>
+<ion-header>
+  <ion-toolbar>
+      <!-- <select-filter
+        [items]="categoriesChips()"
+        [defaultValue]="defaultCategory"
+        (selectedItemEmiter)="onCategoriesFiltered($event)"
+        label="Categoría"
+      >
+      </select-filter> -->
+      <chip-filter
+        [chips]="categoriesChips()"
+        [defaultValue]="defaultCategory"
+        (selectedChipsEmiter)="onCategoriesFiltered($event)"
+      >
+      </chip-filter>
+  </ion-toolbar>
+</ion-header>
+<ion-content #mainContent class="ion-padding-start ion-padding-end ion-padding-bottom todos-page_container">
 
   @if(!isLoading()) {
     <todo-list [todos]="todos()" [categories]="categories()"></todo-list>

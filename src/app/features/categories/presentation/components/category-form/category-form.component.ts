@@ -1,12 +1,13 @@
 import { Component, effect, EventEmitter, inject, input, Output } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { IonInput,IonList , IonItem, IonText, IonLabel, IonButton } from '@ionic/angular/standalone';
 import { Category } from 'src/app/features';
-import { IonicModule, NavController } from '@ionic/angular';
+import {  NavController } from '@ionic/angular';
 
 @Component({
   selector: 'category-form',
   standalone: true,
-  imports: [ReactiveFormsModule, IonicModule],
+  imports: [ReactiveFormsModule, IonInput, IonList, IonItem, IonText, IonLabel, IonButton],
   templateUrl: './category-form.component.html',
 })
 export class TodoFormComponent {
