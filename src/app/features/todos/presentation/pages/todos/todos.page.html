@@ -1,6 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    @if (enabledSelectorCategoriesFilter) {
+    @if (enabledSelectorCategoriesFilter()) {
       <select-filter
         [items]="categoriesChips()"
         [defaultValue]="defaultCategory"

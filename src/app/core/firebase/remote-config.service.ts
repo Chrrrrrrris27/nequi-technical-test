@@ -9,6 +9,9 @@ import { REMOTE_CONFIG_DEFAULTS } from '../constants/remote-config-keys';
 
 @Injectable({ providedIn: 'root' })
 export class RemoteConfigService {
+  private initPromise: Promise<void> | null = null;
+  private isInitialized = false;
+
   constructor(private rc: RemoteConfig) {
     this.rc.settings = {
       minimumFetchIntervalMillis: 0,
@@ -21,18 +24,35 @@ export class RemoteConfigService {
   }
 
   async init() {
+
+    if (this.initPromise) {
+      return this.initPromise;
+    }
+
+    if (this.isInitialized) {
+      return Promise.resolve();
+    }
+
+    this.initPromise = this.performInit();
+    return this.initPromise;
+  }
+
+  private async performInit() {
     try {
       await fetchAndActivate(this.rc);
+      this.isInitialized = true;
     } catch (e) {
-      return;
+      this.initPromise = null;
     }
   }
 
-  getBooleanType(key: string): boolean {
+  async getBooleanType(key: string): Promise<boolean> {
+    await this.init();
     return getBoolean(this.rc, key);
   }
 
-  getStringType(key: string): string {
+  async getStringType(key: string): Promise<string> {
+    await this.init();
     return getString(this.rc, key);
   }
 }

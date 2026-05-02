@@ -3,6 +3,7 @@ import { Todo } from "../../domain/models/todo.model";
 import { TODOS_REPOSITORY, TodosRepository } from "../../domain/domain";
 import { LoaderService, ToastService } from "src/app/shared";
 import { REMOTE_CONFIG_KEYS, RemoteConfigService } from "src/app/core";
+import { REMOTE_CONFIG_DEFAULTS } from "src/app/core/constants/remote-config-keys";
 
 @Injectable()
 export class TodosService {
@@ -12,9 +13,7 @@ export class TodosService {
   private isFirstTodosLoaded = true;
   private todosLimit = 10;
   private todosOffset = 0;
-  enabledSelectorCategoriesFilter = this.remoteConfigService.getBooleanType(
-    REMOTE_CONFIG_KEYS.ENABLED_SELECTOR_CATEGORIES_FILTER,
-  );
+  enabledSelectorCategoriesFilter = signal<boolean>(false);
   filteredCategories: string[] = [];
   availableLoadTodos = signal<boolean>(true);
   todos = signal<Todo[]>([]);
@@ -28,7 +27,20 @@ export class TodosService {
 
   avaialbleLoadTodos = computed(() => this.todosOffset < this.total());
 
-  constructor(@Inject(TODOS_REPOSITORY) private repository: TodosRepository) {}
+  constructor(@Inject(TODOS_REPOSITORY) private repository: TodosRepository) {
+    this.loadRemoteConfig();
+  }
+
+  private async loadRemoteConfig() {
+    try {
+      const value = await this.remoteConfigService.getBooleanType(
+        REMOTE_CONFIG_KEYS.ENABLED_SELECTOR_CATEGORIES_FILTER,
+      );
+      this.enabledSelectorCategoriesFilter.set(value);
+    } catch (error) {
+      this.enabledSelectorCategoriesFilter.set(REMOTE_CONFIG_DEFAULTS[REMOTE_CONFIG_KEYS.ENABLED_SELECTOR_CATEGORIES_FILTER]);
+    }
+  }
 
   async loadTodos() {
     if (this.todosOffset < this.total() || this.isFirstTodosLoaded) {
