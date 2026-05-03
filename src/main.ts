@@ -3,7 +3,6 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 import { IonicStorageModule } from '@ionic/storage-angular';
-import { FirebaseX } from '@awesome-cordova-plugins/firebase-x/ngx';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideRemoteConfig, getRemoteConfig } from '@angular/fire/remote-config';
 
@@ -23,6 +22,5 @@ bootstrapApplication(AppComponent, {
         name: '__todosdb',
       }),
     ),
-    FirebaseX,
   ],
 });

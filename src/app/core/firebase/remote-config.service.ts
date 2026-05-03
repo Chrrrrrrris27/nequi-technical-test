@@ -43,6 +43,7 @@ export class RemoteConfigService {
       this.isInitialized = true;
     } catch (e) {
       this.initPromise = null;
+      this.isInitialized = true;
     }
   }
 
