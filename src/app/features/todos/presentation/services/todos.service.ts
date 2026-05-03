@@ -127,8 +127,7 @@ export class TodosService {
     );
 
     this.todos.set(updatedTodos);
-    this.applyFilter(this.filteredCategories);
-
+    
     this.toastService.addToast({
       message: 'Tarea actualizada!',
       color: 'success',
@@ -136,6 +135,7 @@ export class TodosService {
     });
     try {
       await this.repository.updateTodo(updatedTodo);
+      this.applyFilter(this.filteredCategories);
     } catch (error) {
       this.todos.set(previousTodos);
       this.toastService.addToast({
