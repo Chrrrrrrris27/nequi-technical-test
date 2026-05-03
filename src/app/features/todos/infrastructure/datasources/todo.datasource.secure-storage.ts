@@ -56,7 +56,7 @@ export class TodosDatasourceSecureStorage implements TodosDatasource {
         completed: completed ?? false,
         categoryId
       }
-      this.localStorageService.set(STORAGE_KEYS.TODOS, [newTodo, ...storageTodos]);
+      await this.localStorageService.set(STORAGE_KEYS.TODOS, [newTodo, ...storageTodos]);
       return newTodo;
     } catch (error) {
       throw new Error('Cannot possible create new todo');
@@ -69,7 +69,7 @@ export class TodosDatasourceSecureStorage implements TodosDatasource {
       const updatedTodos = storageTodos.map(todo => 
         todo.id === id ? { ...todo, completed: !todo.completed } : todo,
       )
-      this.localStorageService.set(STORAGE_KEYS.TODOS, updatedTodos);
+      await this.localStorageService.set(STORAGE_KEYS.TODOS, updatedTodos);
     } catch (error) {
       throw new Error('Cannot possible toggle todo');
     }
@@ -81,7 +81,7 @@ export class TodosDatasourceSecureStorage implements TodosDatasource {
       const updatedTodos = storageTodos.map((todo) => 
         todo.id === updatedTodo.id ? updatedTodo : todo
       );
-      this.localStorageService.set(STORAGE_KEYS.TODOS, updatedTodos);
+      await this.localStorageService.set(STORAGE_KEYS.TODOS, updatedTodos);
     } catch (error) {
       throw new Error('Cannot possible update todo');
     }
@@ -90,7 +90,7 @@ export class TodosDatasourceSecureStorage implements TodosDatasource {
   async deleteTodo(id: string): Promise<void> {
     try {
       const newTodos = (await this.getAll()).filter(todo => todo.id !== id);
-      this.localStorageService.set(STORAGE_KEYS.TODOS, newTodos);
+      await this.localStorageService.set(STORAGE_KEYS.TODOS, newTodos);
     } catch (error) {
       throw new Error('Cannot possible delete todo');
     }

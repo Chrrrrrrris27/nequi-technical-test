@@ -41,7 +41,7 @@ export class CateogriesDatasourceLocalStorage implements CategoriesDatasource {
         id: crypto.randomUUID(),
         name,
       };
-      this.localStorageService.set(STORAGE_KEYS.CATEGORIES, [
+      await this.localStorageService.set(STORAGE_KEYS.CATEGORIES, [
         newCategory,
         ...storageCategories,
       ]);
@@ -57,7 +57,7 @@ export class CateogriesDatasourceLocalStorage implements CategoriesDatasource {
       const updatedCategories = storageCategories.map((todo) =>
         todo.id === updatedCategory.id ? updatedCategory : todo,
       );
-      this.localStorageService.set(STORAGE_KEYS.CATEGORIES, updatedCategories);
+      await this.localStorageService.set(STORAGE_KEYS.CATEGORIES, updatedCategories);
     } catch (error) {
       throw new Error('Cannot possible update todo');
     }
